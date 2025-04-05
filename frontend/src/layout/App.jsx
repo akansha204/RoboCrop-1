@@ -1,12 +1,8 @@
 import React from "react";
-// import Navbar from "../components/Navbar";
-// import { Outlet } from "react-router";
+import Navbar from "../components/Navbar";
+import { Outlet } from "react-router-dom";
 import useAuthStore from "../contexts/store/authStore";
 import { useEffect } from "react";
-import Home from "../pages/Home";
-import SignIn from "../pages/SignIn";
-import Signup from "../pages/SignUp";
-import SignUpPage from "../components/SignUpPage";
 
 export default function App() {
   const { checkAuth, loading } = useAuthStore(); // Get Zustand actions/state
@@ -25,10 +21,10 @@ export default function App() {
     );
   return (
     <>
-      <Home />
-      {/* <SignIn /> */}
-      <Signup />
-      {/* <SignUpPage /> */}
+      <Navbar />
+      <main className="container mx-auto px-4 py-8">
+        <Outlet />
+      </main>
     </>
   );
 }
