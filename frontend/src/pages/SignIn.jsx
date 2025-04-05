@@ -1,89 +1,116 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import useAuthStore from "../contexts/store/authStore";
+import { useNavigate } from "react-router";
+import { NavLink } from "react-router";
 
-const SignIn = () => {
-  const [Email, setEmail] = useState("");
-  const [Password, setPassword] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!Email || !Password) {
-      alert("Check Your username or Password again!!");
-      return;
-    }
-
-    navigate("/Home");
-  };
-
+export default function SignIn() {
+  const login = useAuthStore((state) => state.login); // Zustand login function
   const navigate = useNavigate();
+  const { googleLogin } = useAuthStore(); // Google login function
 
-  const handleButtonClick = () => {
-    navigate("/SignUp");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState({});
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError({});
+
+    try {
+      const response = await login(email, password);
+
+      if (!response.success) {
+        setError({ general: response.message || "Login failed" });
+        return;
+      }
+
+      setError({});
+      console.log("✅ Login successful! Redirecting...");
+      navigate("/liked");
+    } catch (error) {
+      console.error("❌ Login Error:", error);
+      setError({
+        general: "Something went wrong. Please try again.",
+      });
+    }
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-gray-200">
-      <div className="w-full md:w-1/2 flex justify-center items-center p-6">
-        <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-          <h1 className="font-bold text-3xl mb-6 text-center">Welcome Back</h1>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="font-medium text-sm block mb-1 text-gray-700">
-                Username or Email
-              </label>
-              <input
-                className="bg-white text-gray-600 p-3 rounded-md border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                placeholder="Enter your mail"
-                value={Email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
+    <div className="flex items-center justify-center min-h-screen bg-[#CFE6D0]">
+      {/* Login Container */}
+      <div className="bg-[#E1F1E7] shadow-2xl rounded-xl p-8 w-[90%] max-w-md text-center">
+        <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+          Welcome Back!
+        </h2>
+        <p className="text-gray-600 text-sm mb-6">Login to continue.</p>
 
-            <div>
-              <h3 className="text-sm font-normal mr-auto mb-1">Password</h3>
-              <input
-                type="password"
-                className="bg-white text-gray-600 p-3 rounded-md border border-gray-300 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                placeholder="••••••••"
-                value={Password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
+        <form onSubmit={handleLogin}>
+          {/* Email Field */}
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2AA831] mb-3"
+            required
+          />
 
-            <button className="bg-blue-600 text-white font-medium text-sm w-full py-3 px-4 rounded-md hover:bg-blue-700 transition mt-4 flex justify-center items-center">
-              Continue
-            </button>
+          {/* Password Field */}
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2AA831] mb-3"
+            required
+          />
 
-            <div className="flex items-center my-4">
-              <div className="flex-grow border-t border-gray-300"></div>
-              <span className="px-4 text-sm text-gray-500">or</span>
-              <div className="flex-grow border-t border-gray-300"></div>
-            </div>
+          {error.general && (
+            <p className="text-red-500 text-sm">{error.general}</p>
+          )}
 
-            {/* Google login button */}
-          </form>
-          <button className="w-full border border-gray-300 flex items-center justify-center gap-2 py-2 px-4 rounded-lg hover:bg-gray-100 transition-all mb-3 cursor-pointer">
+          {/* Forgot Password */}
+          <NavLink
+            to="/forgot-password"
+            className="text-[#2AA831] text-sm self-start mb-4 block text-right"
+          >
+            Forgot your password?
+          </NavLink>
+
+          {/* Login Button */}
+          <button className="w-full bg-[#2AA831] hover:bg-[#5DA134] text-white font-semibold py-2 px-4 rounded-lg transition-all mb-3 cursor-pointer">
+            LOGIN
+          </button>
+
+          {/* OR Divider */}
+          <div className="flex items-center w-full my-3">
+            <div className="border-b w-full"></div>
+            <span className="mx-2 text-gray-500 text-sm">Or</span>
+            <div className="border-b w-full"></div>
+          </div>
+
+          {/* Google Login Button */}
+          <button
+            onClick={googleLogin}
+            className="w-full border border-gray-300 flex items-center justify-center gap-2 py-2 px-4 rounded-lg hover:bg-gray-100 transition-all cursor-pointer"
+          >
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/0/09/IOS_Google_icon.png"
               alt="Google"
               className="w-5 h-5"
             />
-            SIGN UP WITH GOOGLE
+            LOGIN WITH GOOGLE
           </button>
-          <p className="text-sm mt-3 text-center">
-            Don't have an account?{" "}
-            <span
-              className="text-blue-600 cursor-pointer"
-              onClick={handleButtonClick}
-            >
-              SignUp
-            </span>
-          </p>
-        </div>
+        </form>
+
+        {/* Signup Redirect */}
+        <p className="text-sm text-gray-600 mt-4">
+          New to GlowCure?{" "}
+          <NavLink to="/SignUpPage">
+            <span className="text-blue-500 cursor-pointer">Sign up</span>
+          </NavLink>
+        </p>
       </div>
     </div>
   );
-};
-
-export default SignIn;
+}

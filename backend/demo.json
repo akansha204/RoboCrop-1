@@ -1,0 +1,40 @@
+{
+  "sensorData": [
+    {
+      "moisture": 45.3,
+      "humidity": 60.2,
+      "temperature": 25.6,
+      "gpsLocation": {
+        "latitude": 28.7041,
+        "longitude": 77.1025
+      }
+    },
+    {
+      "moisture": 38.7,
+      "humidity": 55.1,
+      "temperature": 27.3,
+      "gpsLocation": {
+        "latitude": 19.076,
+        "longitude": 72.8777
+      }
+    },
+    {
+      "moisture": 50.2,
+      "humidity": 65.4,
+      "temperature": 22.8,
+      "gpsLocation": {
+        "latitude": 34.0837,
+        "longitude": 74.7973
+      }
+    },
+    {
+      "moisture": 42.5,
+      "humidity": 58.9,
+      "temperature": 26.4,
+      "gpsLocation": {
+        "latitude": 15.2993,
+        "longitude": 74.124
+      }
+    }
+  ]
+}
