@@ -130,7 +130,7 @@ export default function Signup(isOpen, setIsOpen) {
           <p className="text-sm text-gray-600 mt-4">
             Already have an account?{" "}
             <span
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/SignIn")}
               className="text-blue-500 cursor-pointer"
             >
               Log in

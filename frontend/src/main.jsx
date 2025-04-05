@@ -6,7 +6,7 @@ import {
   createRoutesFromElements,
   Route,
   RouterProvider,
-} from "react-router";
+} from "react-router-dom"; // Changed from react-router
 import App from "./layout/App.jsx";
 import Home from "./pages/Home.jsx";
 import Signup from "./pages/SignUp.jsx";
@@ -15,16 +15,26 @@ import SignUpPage from "./components/SignUpPage.jsx";
 
 import useAuthStore from "./contexts/store/authStore";
 
+import TabsNavigation from "./components/TabsNavigation";
+import FieldMonitoring from "./pages/FieldMonitoring";
+import Dashboard from "./pages/Dashboard";
+
+
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App />}>
-      <Route path="" element={<Home />} />
-      <Route path="SignUp" element={<Signup />} />
-      <Route path="login" element={<SignIn />} />
+    <Route path="/" element={<App />}> {/* You likely want App as your root layout */}
+      <Route index element={<Home />} />
       <Route path="SignUpPage" element={<SignUpPage />} />
+      <Route path="Signup" element={<Signup />} />
+      <Route path="SignIn" element={<SignIn />} />
+      <Route path="Dashboard" element={<Dashboard />} />
+      <Route path="TabsNavigation" element={<TabsNavigation />} />
+      <Route path="FieldMonitoring" element={<FieldMonitoring />} /> 
     </Route>
   )
 );
+
+
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>

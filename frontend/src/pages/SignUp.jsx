@@ -48,7 +48,7 @@ export default function Signup() {
 
           <p className="text-sm text-gray-600 mt-4">
             Already have an account?{" "}
-            <NavLink to="/login">
+            <NavLink to="/SignIn">
               <span className="text-blue-500 cursor-pointer">Log in</span>
             </NavLink>
           </p>
