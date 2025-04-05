@@ -1,14 +1,7 @@
 import React from "react";
-// import Navbar from "../components/Navbar";
-// import { Outlet } from "react-router";
 import useAuthStore from "../contexts/store/authStore";
 import { useEffect } from "react";
-import Home from "../pages/Home";
-import SignIn from "../pages/SignIn";
-import Signup from "../pages/SignUp";
-import SignUpPage from "../components/SignUpPage";
 import { Outlet } from "react-router-dom";
-import TabsNavigation from "../components/TabsNavigation";
 
 export default function App() {
   const { checkAuth, loading } = useAuthStore(); // Get Zustand actions/state
