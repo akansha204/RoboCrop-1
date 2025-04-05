@@ -12,9 +12,6 @@ import Home from "./pages/Home.jsx";
 import Signup from "./pages/SignUp.jsx";
 import SignIn from "./pages/SignIn.jsx";
 import SignUpPage from "./components/SignUpPage.jsx";
-
-import useAuthStore from "./contexts/store/authStore";
-
 import TabsNavigation from "./components/TabsNavigation";
 import FieldMonitoring from "./pages/FieldMonitoring";
 import Dashboard from "./pages/Dashboard";
