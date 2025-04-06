@@ -18,12 +18,12 @@ const userSchema = new Schema({
 });
 
 const cropSchema = new Schema({
-  moisture: { type: Number, required: true },
-  temperature: { type: Number, required: true },
-  humidity: { type: Number, required: true },
+  moisture: { type: Number },
+  temperature: { type: Number },
+  humidity: { type: Number },
   location: {
-    langitude: { type: Number, required: true },
-    latitude: { type: Number, required: true },
+    langitude: { type: Number },
+    latitude: { type: Number },
   },
 });
 
