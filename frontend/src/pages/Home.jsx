@@ -6,30 +6,22 @@ const Home = () => {
     <div className="min-h-screen flex flex-col">
       {/* Navigation Bar */}
       <header className="bg-white py-4 px-6 flex justify-between items-center">
-        {/* Logo */}
         <div className="flex items-center">
-          <img
-            src="/assets/logo.jpg"
-            alt="RoboCrop Logo"
-            className="h-10"
-          />
+          <img src="/assets/logo.jpg" alt="RoboCrop Logo" className="h-10" />
           <h1 className="text-gray-700 text-2xl font-bold ml-2">ROBOCROP</h1>
         </div>
       </header>
 
       {/* Hero Section */}
-      <main className="flex-grow relative">
-        
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage: `url('/assets/Land.jpg')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center'
-          }}
-        >
-          {/* Overlay to ensure text is readable against the image */}
-          <div className="absolute inset-0 bg-black bg-opacity-20"></div>
+      <main className="flex-grow relative overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="/assets/land.png" 
+            alt="Land Background" 
+            className="w-full h-full object-cover" 
+          />
+          {/* Optional Overlay */}
           
         </div>
 
@@ -42,25 +34,19 @@ const Home = () => {
 
         {/* Hero Content */}
         <div className="relative z-10 pt-32 px-8 md:px-20 text-white">
-          <h2 className="uppercase font-medium mb-4">Welcome to Robocrop</h2>
-          
+          <h2 className="uppercase font-bold text-3xl text-yellow-400 mb-4">Welcome to Robocrop</h2>
           <div className="relative">
-            <h1 className="text-6xl md:text-8xl font-bold uppercase leading-tight mb-2">
-              Your Crop
-            </h1>
+            <h1 className="text-6xl md:text-8xl font-bold uppercase leading-tight mb-2">Your Crop</h1>
             
-            {/* Sun/rays icon */}
             <div className="absolute right-0 top-0 md:right-64">
               <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M40 0L30 20L10 30L30 40L40 60L50 40L70 30L50 20L40 0Z" fill="#FFD54F"/>
               </svg>
             </div>
             
-            <h1 className="text-6xl md:text-8xl font-bold uppercase leading-tight">
-              Your Control
-            </h1>
+            <h1 className="text-6xl md:text-8xl font-bold uppercase leading-tight">Your Control</h1>
           </div>
-          
+
           <div className="mt-16">
             <Link 
               to="/SignUp" 

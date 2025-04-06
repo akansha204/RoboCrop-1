@@ -9,8 +9,11 @@ import {
 const useAuthStore = create((set) => ({
   user: null,
   loading: true,
+  isAuthenticated: false,
 
   googleLogin: () => {
+    // Store the intended redirect path before Google login
+    sessionStorage.setItem('redirectAfterAuth', '/dashboard');
     window.location.href = `${import.meta.env.VITE_API_URL}/auth/google`;
   },
 
@@ -22,13 +25,20 @@ const useAuthStore = create((set) => ({
       if (authData?.isAuthenticated && authData?.user) {
         set((state) => {
           if (JSON.stringify(state.user) !== JSON.stringify(authData.user)) {
+            // Check if there's a pending redirect
+            const redirectPath = sessionStorage.getItem('redirectAfterAuth');
+            if (redirectPath) {
+              sessionStorage.removeItem('redirectAfterAuth');
+              window.location.href = redirectPath;
+            }
+            
             return {
               user: authData.user,
               loading: false,
               isAuthenticated: true,
             };
           }
-          return state; // ✅ Avoids unnecessary re-renders
+          return state;
         });
       } else {
         set({
@@ -109,8 +119,20 @@ const useAuthStore = create((set) => ({
   },
 
   logout: async () => {
-    await logoutUser();
-    set({ user: null });
+    try {
+      await logoutUser();
+      set({ 
+        user: null,
+        isAuthenticated: false,
+        loading: false
+      });
+      // Clear any stored auth data
+      sessionStorage.removeItem('redirectAfterAuth');
+      return { success: true };
+    } catch (error) {
+      console.error("Logout failed:", error);
+      return { success: false, error: "Logout failed" };
+    }
   },
 }));
 

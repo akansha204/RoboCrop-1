@@ -1,9 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react'
+import useAuthStore from '../contexts/store/authStore';
+import { useNavigate } from 'react-router-dom';
 
 const TabsNavigation = ({ onSelect }) => {
     const [activeTab, setActiveTab] = useState("Dashboard");
     const [profileMenuOpen, setProfileMenuOpen] = useState(false);
     const menuRef = useRef(null);
+    const logout = useAuthStore((state) => state.logout);
+    const user = useAuthStore((state) => state.user);
+    const navigate = useNavigate();
 
     const tabs = [
         {name: "Dashboard", icon: <img src="/assets/dashboard.png" alt="Dashboard" className="w-6 h-6" />},
@@ -30,6 +35,35 @@ const TabsNavigation = ({ onSelect }) => {
     const handleTabClick = (tabName) => {
         setActiveTab(tabName);
         onSelect(tabName);
+    };
+
+    const handleLogout = async () => {
+        try {
+            const response = await logout();
+            if (response.success) {
+                setProfileMenuOpen(false);
+                navigate('/', { replace: true });
+            } else {
+                console.error("Logout failed:", response.error);
+            }
+        } catch (error) {
+            console.error("Error during logout:", error);
+        }
+    };
+
+    // Get user's display name
+    const getDisplayName = () => {
+        if (!user) return '';
+        if (user.firstName && user.lastName) {
+            return `${user.firstName} ${user.lastName}`;
+        }
+        if (user.displayName) {
+            return user.displayName;
+        }
+        if (user.email) {
+            return user.email.split('@')[0];
+        }
+        return 'User';
     };
 
     return (
@@ -71,13 +105,13 @@ const TabsNavigation = ({ onSelect }) => {
                         className="flex items-center p-2 md:p-3 rounded-lg hover:bg-gray-100 w-full transition-colors duration-200"
                     >
                         <img src="/assets/profile.png" alt="Profile" className="w-8 h-8 rounded-full mr-2 md:mr-3" />
-                        <span className="text-sm font-medium hidden md:block">Profile</span>
+                        <span className="text-sm font-medium hidden md:block">{getDisplayName()}</span>
                     </button>
                     {profileMenuOpen && (
                         <div className="absolute bottom-16 left-0 md:left-4 bg-white rounded-lg shadow-lg py-2 w-48 md:w-56 z-20">
                             <div className="px-4 py-3 border-b border-gray-100">
-                                <p className="text-sm font-medium text-gray-900">Ayush Tiwari</p>
-                                <p className="text-xs text-gray-500">ayush@gmail.com</p>
+                                <p className="text-sm font-medium text-gray-900">{getDisplayName()}</p>
+                                <p className="text-xs text-gray-500">{user?.email || ''}</p>
                             </div>
                             <a href="#profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View Profile</a>
                             <a href="#settings" 
@@ -89,7 +123,12 @@ const TabsNavigation = ({ onSelect }) => {
                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                Settings
                             </a>
-                            <a href="#logout" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign Out</a>
+                            <button 
+                                onClick={handleLogout}
+                                className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            >
+                                Sign Out
+                            </button>
                         </div>
                     )}
                 </div>

@@ -15,6 +15,8 @@ import SignUpPage from "./components/SignUpPage.jsx";
 import TabsNavigation from "./components/TabsNavigation";
 import FieldMonitoring from "./pages/FieldMonitoring";
 import Dashboard from "./pages/Dashboard";
+import WeedManagement from "./pages/WeedManagement";
+import DashboardData from "./pages/DashboardData";
 
 
 const router = createBrowserRouter(
@@ -27,6 +29,8 @@ const router = createBrowserRouter(
       <Route path="Dashboard" element={<Dashboard />} />
       <Route path="TabsNavigation" element={<TabsNavigation />} />
       <Route path="FieldMonitoring" element={<FieldMonitoring />} /> 
+      <Route path="WeedManagement" element={<WeedManagement />} /> 
+      <Route path="DashboardData" element={<DashboardData />} /> 
     </Route>
   )
 );

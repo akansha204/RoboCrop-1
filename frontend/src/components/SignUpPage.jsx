@@ -33,7 +33,7 @@ export default function Signup(isOpen, setIsOpen) {
         return;
       }
       console.log("✅ Signup successful! Redirecting...");
-      navigate("/"); // Redirect after successful signup
+      navigate("/Dashboard"); // Redirect after successful signup
     } catch (error) {
       console.error("Signup Error:", error);
       setErrors({ general: "An unexpected error occurred. Please try again." });
@@ -50,7 +50,7 @@ export default function Signup(isOpen, setIsOpen) {
         {/* Left - Signup Form */}
         <div className="w-full md:w-1/2 p-8 flex flex-col justify-center items-center">
           <h2 className="text-2xl font-semibold text-gray-900 mb-2">
-            Welcome to GlowCure
+            Welcome to RoboCrop
           </h2>
           <p className="text-gray-600 text-sm mb-6">Get started - it's free.</p>
 
